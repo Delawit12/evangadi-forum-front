@@ -39,14 +39,15 @@ const AnswerQuestion = ({ questionId }) => {
           answer: form.answer,
         }
       );
-      alert(response.data.msg);
+      console.log("response",response)
+      // alert(response.data.msg);
 
       
 
       setReloadComponent(true); // Trigger component reload
     } catch (err) {
-      alert(err.response.data.msg);
-      console.log("problem", err.response.data.msg);
+      // alert(err.response.data.msg);
+      // console.log("problem", err.response.data.msg);
     }
   };
 

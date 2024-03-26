@@ -44,7 +44,7 @@ export default function AskQuestion() {
         }
       );
       console.log(response)
-      alert(response.data.msg);
+      // alert(response.data.msg);
       navigate("/");
     } catch (err) {
       alert(err)

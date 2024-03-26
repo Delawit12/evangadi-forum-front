@@ -24,16 +24,13 @@ const SingleQuestion = () => {
   
   const answersByQuestionId = async (data) => {
     try {
-      console.log(data)
-      // console.log(params.id)
+      console.log("params.id",params.id) 
       const answersRes = await axios.get(
-        `api/answers/`
+        `/api/answers/${params.id}`
       );
-      console.log(answersRes)
-
-
+      console.log('answersRes',answersRes)
       setAnswers(answersRes.data.data);
-       console.log("(answersRes.data.data",answersRes.data.data)
+       console.log(answersRes.data.data)
     } catch (err) {
       console.error("Problem:", err);
     }
@@ -41,33 +38,25 @@ const SingleQuestion = () => {
   
   useEffect(() => {
     async function fetchData() {
-  try {
-    console.log(params.id)
-    const response = await axios.get("api/questions/"); // Remove the ":" before `${params.id}`
-    const questionId=params.id
-    // console.log(response.data.questions[questionId].questionId)
-    setQuestion(response.data.questions[questionId]);
-    // console.log(response.data.data.userId);
-  
-
+      try {
+        // console.log(params.id) 
+        const response = await axios.get(`/api/questions/${params.id}`);// Remove the ":" before `${params.id}`
+        // console.log("response",response)
+        setQuestion(response.data.data);
+        // console.log(response.data.data.questionId);
+      
     
-    // Call answersByQuestionId with the fetched data, assuming it takes a single argument
-    answersByQuestionId(response.data.questions[questionId].questionId);
-  } catch (err) {
-    alert(err.message); // Use err.message to display the error message
-    console.error("Problem:", err);
-  }
+        
+        // Call answersByQuestionId with the fetched data, assuming it takes a single argument
+        answersByQuestionId(response.data.data);
+      } catch (err) {
+        alert(err.message); // Use err.message to display the error message
+        console.error("Problem:", err);
+      }
 }
-
-  //   fetchData();
-  // }, [params.id]);
-  
-  
     fetchData();
-
-
   }, [params.id]);
-
+  
 
   
 //  console.log(userInfo);
