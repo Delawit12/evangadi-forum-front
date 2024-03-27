@@ -62,11 +62,12 @@ const Signin = () => {
             token: data.token,
             user: {
               id: data.user["id"],
-              userEmail: data.user["email"],
+              username: data.user["username"],
             },
           },
         });
         console.log("user id",user.user.id)
+        console.log("user email",user.user.username)
       }
       navigate("/");
     } catch (error) {

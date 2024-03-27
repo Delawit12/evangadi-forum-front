@@ -8,6 +8,7 @@ import "./AnswerQuestion.css";
 const AnswerQuestion = ({ questionId }) => {
   const [{ user }, dispatch] = useStateValue();
   const navigate = useNavigate();
+  const [message, setMessage] = useState('');
   const [form, setForm] = useState({});
   const [reloadComponent, setReloadComponent] = useState(false);
 
@@ -41,13 +42,17 @@ const AnswerQuestion = ({ questionId }) => {
       );
       console.log("response",response)
       // alert(response.data.msg);
+      console.log(response.data.msg)
 
       
 
       setReloadComponent(true); // Trigger component reload
     } catch (err) {
       // alert(err.response.data.msg);
-      // console.log("problem", err.response.data.msg);
+      console.log("problem askQuestion", err.response.data.success);
+      if(!err.response.data.success){
+        setMessage("you can't answer the same question multiple times you already give the answer for the given question")
+      }
     }
   };
 
@@ -76,6 +81,7 @@ const AnswerQuestion = ({ questionId }) => {
             id=""
           ></textarea>
           <br/>
+          <small className=" text-danger py-1 fw-bold ">{message}</small>
         <div className="row">
         <button className="question_post_btn col-3" >
           Post Your Answer

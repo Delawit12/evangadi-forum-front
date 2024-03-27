@@ -11,7 +11,7 @@ const reducer = (state, action) => {
           token: action.user.token || null,
           user: {
             id: action.user.user ? action.user.user.id || null : null,
-            userEmail: action.user.user ? action.user.userEmail || null : null,
+            username: action.user.user ? action.user.username || null : null,
           },
         } : null,
       };

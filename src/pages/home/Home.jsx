@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./home.css";
 import axios from "../../utility/axios";
+import { useStateValue } from "../../utility/stateprovider";
 
 const Home = () => {
 	const [allQuestions, setallQuestions] = useState([]);
+	let params = useParams();
+	const [{user }, dispatch] = useStateValue();
+	const [userData, setUserData] = useState({})
 	useEffect(() => {
 		async function fetchData() {
 			try {
@@ -13,12 +17,13 @@ const Home = () => {
 				setallQuestions(response.data.questions);
 				console.log(response.data)
 			} catch (err) {
-				alert(err);
+				// alert(err);
 				console.log("problem", err);
 			}
 		}
 		fetchData();
 	}, []);
+	  console.log("user.user.id",user.user)
 console.log("all question",allQuestions)
 	return (
 		<div className="container my-5 home-container">
@@ -26,7 +31,7 @@ console.log("all question",allQuestions)
 				<Link to="AskQuestion">
 					<button className="ask_button">Ask Question</button>
 				</Link>
-				{/* <h4>Welcome</h4> */}
+				<h4>Welcome</h4>
 			</div>
 			<h3>Questions</h3>
 			<br />

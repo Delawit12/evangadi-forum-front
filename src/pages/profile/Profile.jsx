@@ -3,8 +3,12 @@ import './profile.css';
 import { useStateValue } from '../../utility/stateprovider';
 import axios from "../../utility/axios";
 import profile from "../../assets/Images/User.png";
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
+
+
+
 const Profile = () => {
+  let params = useParams();
   const [userData, setUserData] = useState({});
   const [{ user }, dispatch] = useStateValue();
   const [form, setForm] = useState(null);
@@ -24,21 +28,28 @@ const Profile = () => {
   }, [navigate]);
 
   useEffect(() => {
-    const id = { id: user.user.id };
+    // const id = { userId:user.user.id };
+    console.log("params.id",params.id)
+    // console.log("id",id)
+    // console.log("user.token",user.token)
     const fetchData = async () => {
       try {
         axios.defaults.withCredentials = true;
-        const response = await axios.post(
-          'api/users/userinfo',
-          id,
-          {
-            headers: {
-              'x-auth-token': user.token
-            }
-          }
+        const response = await axios.get(
+          `/api/users/userinfo/${params.id}`
+          // ,{
+          //   userId: user.user.id,
+          // },
+          // {
+          //   headers: {
+          //     'x-auth-token': user.token
+          //   }
+          // }
+
         );
         const data = response.data.data;
-       // console.log(data);
+        // console.log("response",response)
+      //  console.log("data",data);
         setUserData(data);
       } catch (error) {
         console.log(error);
@@ -55,7 +66,7 @@ const Profile = () => {
   const profileChange = () => {
    // console.log(form);
     const fetchData = () => { 
-      const response = axios.post(`/api/users/profilepicture`,[form,user.user['id']]);
+      const response = axios.get(`api/users/profilepicture`,[form,user.user['id']]);
       console.log(response);
     }
     fetchData();

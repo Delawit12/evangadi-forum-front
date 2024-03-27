@@ -32,7 +32,7 @@ const navigate = useNavigate();
   }
 
   const handleClick = () => { 
-     navigate('/profile')
+     navigate(`/profile/${user.user.id}`)
   }
 
 useEffect(() => {
@@ -48,7 +48,7 @@ useEffect(() => {
 		window.removeEventListener("resize", handleScroll);
 	};
 }, []);
-
+// console.log("user.user.id",user.user)
   return (
 		<>
 			<Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">

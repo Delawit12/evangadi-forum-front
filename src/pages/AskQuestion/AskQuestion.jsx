@@ -6,6 +6,7 @@ import { useStateValue } from '../../utility/stateprovider';
 export default function AskQuestion() {
   const [{user }, dispatch] = useStateValue();
   const [form, setForm] = useState({});
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
     useEffect(() => {
@@ -47,8 +48,9 @@ export default function AskQuestion() {
       // alert(response.data.msg);
       navigate("/");
     } catch (err) {
-      alert(err)
-      console.log("problem", err);
+      // alert(err)
+      console.log("problem", err.response.data.message);
+      setMessage(err.response.data.message)
     }
   };
   return (
@@ -98,6 +100,7 @@ export default function AskQuestion() {
           onChange={handleChange}
         ></textarea>
         <br/>
+        <small className="text-danger py-1 fw-bolder ">{message}</small>
         <div className="row">
         <button className="question_post_btn col-3" >
           Post Your Question

@@ -81,7 +81,7 @@ function App() {
           }
         />
         <Route
-          path="/profile"
+          path="/profile/:id"
           element={
             <>
               <Header />

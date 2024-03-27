@@ -44,7 +44,7 @@ const [conPassword, setConPassword] = useState(false);
     }
   }
     const handleSubmit = async (e) => {
-      // console.log(form)
+      console.log(form)
       e.preventDefault();
       setMessage(''); 
      // console.log(form); alert
@@ -57,11 +57,23 @@ const [conPassword, setConPassword] = useState(false);
        console.log(response);
         if (data) { 
         //   alert(data.msg);
+        if (data.success == true) { 
+          dispatch({
+            type: "SET_USER",
+          user: {
+            token: data.token,
+            user: {
+              id: data.user["id"],
+              username: form.username,
+            },
+          },
+          });
+      }
           navigate('/login')
         }
         
       } catch (error) {
-        alert(error.response.data.msg);
+        // alert(error.response.data.msg);
         setMessage(error.response.data.msg);
       console.log('Error authenticating user:', error.response.data.msg);
       setError({

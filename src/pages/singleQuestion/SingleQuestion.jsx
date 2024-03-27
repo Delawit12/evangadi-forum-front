@@ -50,8 +50,9 @@ const SingleQuestion = () => {
         // Call answersByQuestionId with the fetched data, assuming it takes a single argument
         answersByQuestionId(response.data.data);
       } catch (err) {
-        alert(err.message); // Use err.message to display the error message
+        // alert(err.message); // Use err.message to display the error message
         console.error("Problem:", err);
+        console.error("Problem:", err.message);
       }
 }
     fetchData();
