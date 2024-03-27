@@ -23,8 +23,8 @@ const Home = () => {
 		}
 		fetchData();
 	}, []);
-	  console.log("user.user.id",user.user)
-console.log("all question",allQuestions)
+	//   console.log("user.user.id",user.user)
+// console.log("all question",allQuestions)
 	return (
 		<div className="container my-5 home-container">
 			<div className="d-flex mb-5 justify-content-between">
