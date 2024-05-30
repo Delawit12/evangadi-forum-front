@@ -43,49 +43,50 @@ const [conPassword, setConPassword] = useState(false);
       return false;
     }
   }
-    const handleSubmit = async (e) => {
-      console.log(form)
-      e.preventDefault();
-      setMessage(''); 
-     // console.log(form); alert
-        // if (1) {
-     if (validateForm()) {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMessage('');
+    if (validateForm()) {
       try {
         axios.defaults.withCredentials = true;
-        const response = await axios.post("api/users/register",form);
-        const data = response.data;
-       console.log(response);
-        if (data) { 
-        //   alert(data.msg);
-        if (data.success == true) { 
-          dispatch({
-            type: "SET_USER",
-          user: {
-            token: data.token,
-            user: {
-              id: data.user["id"],
-              username: form.username,
-            },
-          },
-          });
-      }
-          navigate('/login')
+        const response = await axios.post("api/users/register", form);
+  
+        if (response && response.data) {
+          const data = response.data;
+          console.log(response);
+          console.log(data);
+  
+          if (data.success && data.message === 'User created successfully') {
+            dispatch({
+              type: "SET_USER",
+              user: {
+                token: data.token,
+                user: {
+                  id: data.user["id"],
+                  username: form.username,
+                },
+              },
+            });
+            navigate('/login');
+          } else {
+            setMessage(data.message || 'Error occurred during registration');
+          }
+        } else {
+          setMessage('Unexpected response structure from the server');
         }
-        
       } catch (error) {
-        // alert(error.response.data.msg);
-        setMessage(error.response.data.msg);
-      console.log('Error authenticating user:', error.response.data.msg);
-      setError({
-        ...errors,
-        pass: 'Network Error: Unable to reach the server',
-      });
+        if (error.response && error.response.data) {
+          setMessage(error.response.data.message);
+          console.log('Error authenticating user:', error.response.data.message);
+        } else {
+          setMessage('Network Error: Unable to reach the server');
+        }
       }
-      }else {
-       return setMessage("password don't match")
-      }
-      
+    } else {
+      setMessage("Passwords don't match");
+    }
   };
+  
 
    return (
     <div className="container-fluid sign_page">
